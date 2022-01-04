@@ -34,16 +34,24 @@ module.exports = function toReadable(number) {
         "ninety",
     ];
 
+    if (number === 0) return "zero";
+
     function word2Didg(number) {
         const checker = number % 10;
         const interim = Math.floor(number / 10);
-        return dozens[interim] + " " + toReadable(checker);
+        if (number < 20) {
+            return units[number];
+        } else if (checker === 0) {
+            return dozens[interim];
+        } else {
+            return dozens[interim] + " " + toReadable(checker);
+        }
     }
     function word3Didg(number) {
         const checker = number % 100;
         const interim = Math.floor(number / 100);
         return checker === 0
-            ? units[interim] + " hundred " + ""
+            ? units[interim] + " hundred"
             : units[interim] + " hundred " + word2Didg(checker);
     }
 
